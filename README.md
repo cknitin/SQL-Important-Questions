@@ -2,7 +2,7 @@
 
 #### Difference between RANK(), DENSE_RANK() and RowNumber()
 
-	Rown Number
+	# Rown Number
 
 SELECT ROW_NUMBER() OVER (ORDER BY TOTALAmount) AS RowNumber, TotalAmount FROM orders
 
@@ -21,7 +21,7 @@ RowNumber 	| TotalAmount
 
 
 
-	RANK
+	# RANK
 
 SELECT RANK() OVER (ORDER BY TOTALAmount) AS [RANK], TotalAmount FROM orders
 
@@ -40,7 +40,7 @@ RANK		|TotalAmount
 9			|90.00
 
 
-	DENSE_RANK 
+	# DENSE_RANK 
 
 SELECT DENSE_RANK() OVER (ORDER BY TOTALAmount) AS [DENSE_RANK], TotalAmount FROM orders
 
