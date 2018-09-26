@@ -88,5 +88,12 @@ DENSERANK	|TotalAmount
     WHERE Salary IN(SELECT TOP 3 Salary FROM Employee ORDER BY Salary ASC)
 
 
+3. #### Interchange the gender in a single query
+
+		UPDATE Employee SET Gender = (case when gender = 'Male' then 'Female' ELSE 'Male' END)
+
+
+
+
 
 
