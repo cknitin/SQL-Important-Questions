@@ -92,6 +92,13 @@ DENSERANK	|TotalAmount
 
 		UPDATE Employee SET Gender = (case when gender = 'Male' then 'Female' ELSE 'Male' END)
 
+4. #### Update the salary of Female by 5000 and male with 500
+
+		UPDATE Employee SET Salary = (case when gender = 'Male' then salary + 500 ELSE Salary + 5000 END)
+
+
+
+
 
 
 
