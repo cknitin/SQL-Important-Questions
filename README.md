@@ -58,7 +58,7 @@ DENSERANK	|TotalAmount
 5			|90.00
 
 
-2. #### TOP 3rd Highest Saalry
+2. #### TOP 3rd Highest Salary
 
 #### Method 1
 	SELECT * FROM (SELECT * FROM Employee Order by Salary DESC) X ORDER BY Salary ASC
