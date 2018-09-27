@@ -82,7 +82,7 @@ DENSERANK	|TotalAmount
 
     SELECT MAX(Salary)
     FROM Employee
-    WHERE Salary IN(SELECT TOP 3 Salary FROM Employee ORDER BY Salary DESC)
+    WHERE Salary IN(SELECT DISTINCT TOP 3 Salary FROM Employee ORDER BY Salary DESC)
 
 
 # 3. Interchange the gender in a single query
@@ -167,6 +167,35 @@ The session is the database connection. The scope is the current query or the cu
 A situation where the scope_identity() and the @@identity functions differ, is if you have a trigger on the table. If you have a query that inserts a record, causing the trigger to insert another record somewhere, the scope_identity() function will return the identity created by the query, while the @@identity function will return the identity created by the trigger.
 
 So, normally you would use the scope_identity() function.
+
+
+# 6 How do you determine the maximum nested-level of Stored Procedure ?
+       
+
+Sol : 1. Creating stored procedure : 
+
+    CREATE PROC PROC_SAMPLE1
+        AS
+    BEGIN
+        PRINT @@NESTLEVEL
+
+        EXEC PROC_SAMPLE1
+    END
+
+2. Executing stored procedure : 
+
+		EXEC PROC_SAMPLE1
+
+3. Result : 
+
+    1 <br/>
+    2 <br/>
+    3 <br/>
+    .. <br/>
+    .. <br/>
+    32 <br/>
+    Msg 217, Level 16, State 1, Procedure PROC_SAMPLE1, Line 5 
+    Maximum stored procedure, function, trigger, or view nesting level exceeded (limit 32).
 
 
 
