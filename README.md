@@ -169,7 +169,7 @@ A situation where the scope_identity() and the @@identity functions differ, is i
 So, normally you would use the scope_identity() function.
 
 
-# 6 How do you determine the maximum nested-level of Stored Procedure ?
+# 6. How do you determine the maximum nested-level of Stored Procedure ?
        
 
 Sol : 1. Creating stored procedure : 
@@ -196,6 +196,10 @@ Sol : 1. Creating stored procedure :
     32 <br/>
     Msg 217, Level 16, State 1, Procedure PROC_SAMPLE1, Line 5 
     Maximum stored procedure, function, trigger, or view nesting level exceeded (limit 32).
+    
+# 7. How many Foreign key can i have in my MS sql table ?
+       
+A Maximum of 253 Foreign Keys we can have in for a single table.
 
 
 
