@@ -425,3 +425,11 @@ Result
 
 Sometimes we need to know about the data which is being inserted/deleted by triggers in database. With the insertion and deletion of data, tables named “INSERTED” and “DELETED” gets created in SQL Server which contains modified/deleted data. 
 Here, “INSERTED” and “DELETED” tables are called magic tables.
+
+# 16. What is the difference between a Local and a Global temporary table?
+
+A local temporary table exists only for the duration of a connection and accessible only in the session they have been created or, if defined inside a compound statement, for the duration of the compound statement. 
+
+Global temporary tables (created with a double “##”) are visible to all sessions. You should always check for existence of the global temporary table before creating it… if it already exists, then you will get a duplicate object error. 
+
+Global temporary tables are dropped when the session that created it ends, and all other sessions have stopped referencing it.
