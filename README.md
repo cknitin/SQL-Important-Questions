@@ -93,7 +93,80 @@ DENSERANK	|TotalAmount
 
 		UPDATE Employee SET Salary = (case when gender = 'Male' then salary + 500 ELSE Salary + 5000 END)
 
+5. #### Diffrence between @@IDENTITY and IDENTITY and SCOPE_IDENTITY and IDENT_CURRENT
 
+  - The @@identity function returns the last identity created in the same session.
+  - The scope_identity() function returns the last identity created in the same session and the same scope.
+  - The ident_current(name) returns the last identity created for a specific table or view in any session.
+  - The identity() function is not used to get an identity, it's used to create an identity in a select...into query.
+        
+
+#### Example
+
+    CREATE TABLE Newspaper
+    (
+        ID INT IDENTITY(1,1) PRIMARY KEY,
+        Name NVARCHAR(100)
+    )
+
+	INSERT INTO Newspaper VALUES ('The Hindu'), ('Times of India')
+    
+    SELECT * FROM Newspaper
+    
+    
+    1	The Hindu
+    2	Times of India
+    3	The Hindustan
+
+
+	CREATE TABLE LocalNewspaper
+    (
+        ID INT IDENTITY(100,5) PRIMARY KEY,
+        Name NVARCHAR(100)
+    )
+    
+    INSERT INTO LocalNewspaper VALUES ('Amur Ujala'), ('Danika Vichar')
+	
+    SELECT * FROM LocalNewspaper
+    
+    100	 Amur Ujala
+    105	 Danika Vichar
+    110	 The Hindustan
+    
+    
+    CREATE TRIGGER insertNewspaper ON Newspaper
+    FOR INSERT AS
+    BEGIN
+    DECLARE @name NVARCHAR(100)
+    SELECT @name=name FROM INSERTED
+        INSERT INTO LocalNewspaper VALUES (@name)
+    END
+
+
+	INSERT INTO Newspaper VALUES ('The Hindustan')
+    
+    SELECT @@IDENTITY As [@@IDENTITY]
+    GO
+    SELECT SCOPE_IDENTITY() As [SCOPE_IDENTITY]
+    GO
+    SELECT IDENT_CURRENT('Newspaper') [IDENT_SELECT]
+    
+    @@IDENTITY
+	110
+
+	SCOPE_IDENTITY
+	3
+    
+    IDENT_SELECT
+	3
+
+#### Explaintation
+
+The session is the database connection. The scope is the current query or the current stored procedure.
+
+A situation where the scope_identity() and the @@identity functions differ, is if you have a trigger on the table. If you have a query that inserts a record, causing the trigger to insert another record somewhere, the scope_identity() function will return the identity created by the query, while the @@identity function will return the identity created by the trigger.
+
+So, normally you would use the scope_identity() function.
 
 
 
