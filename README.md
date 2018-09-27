@@ -468,3 +468,38 @@ Table variable is similar to temporary table It is not physically stored in the 
 		SELECT 	YakID, YakName FROM 	myTable  WHERE 	AutoID <= 50
 
 We don't need to drop the @temp variable as this is created inside the memory and automatically disposed when scope finishes.
+
+# 18. Is table variables are Transaction neutral?
+
+YES, Table variables are Transaction neutral. They are variables and thus aren't bound to a transaction.
+Temp tables behave same as normal tables and are bound by transactions.
+
+#### Example
+
+A simple example shows this difference quite nicely:
+
+    BEGIN TRAN
+    declare @var table (id int, data varchar(20) )
+    create table #temp (id int, data varchar(20) )
+
+    insert into @var
+    select 1, 'data 1' union all
+    select 2, 'data 2' union all
+    select 3, 'data 3'
+
+    insert into #temp
+    select 1, 'data 1' union all
+    select 2, 'data 2' union all
+    select 3, 'data 3'
+
+    select * from #temp
+    select * from @var
+    ROLLBACK
+    select * from @var
+    if object_id('tempdb..#temp') is null
+        select '#temp does not exist outside the transaction' 
+
+#### Result
+
+We see that the table variable still exists and has all it's data unlike the temporary table that doesn't exists when the 	transaction rollbacked.
+
