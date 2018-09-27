@@ -421,4 +421,7 @@ Result
 - 2.Abbreviation: uNicode 
 - 3.Accepts both English character and non-English symbols 
 
+# 15. What are magic tables?
 
+Sometimes we need to know about the data which is being inserted/deleted by triggers in database. With the insertion and deletion of data, tables named “INSERTED” and “DELETED” gets created in SQL Server which contains modified/deleted data. 
+Here, “INSERTED” and “DELETED” tables are called magic tables.
