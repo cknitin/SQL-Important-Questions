@@ -405,5 +405,20 @@ Result
         Second
         Third
 
+# 14. Difference between VARCHAR and NVARCHAR
+
+#### VARCHAR: 
+
+- 1.Storage: 8 bit 
+- 2.Abbreviation: Variable -Length Character String 
+- 3.Accepts only English character 
+- 4.Doesn't supports other language symbols 
+- 5.Runs faster than NVARCHAR as consumes less memory 
+
+#### NVARCHAR:
+
+- 1.Storage: 16 bit 
+- 2.Abbreviation: uNicode 
+- 3.Accepts both English character and non-English symbols 
 
 
