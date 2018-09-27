@@ -265,6 +265,11 @@ Result
             ,ERROR_MESSAGE() AS ErrorMessage;  
     END CATCH;
 
+Result
+	ErrorNumber	ErrorSeverity	ErrorState	ErrorProcedure	ErrorLine	ErrorMessage
+	8134	16	1	NULL	4	Divide by zero error encountered.    
+    
+
 #### Errors Unaffected by a TRY…CATCH Construct
 
 	BEGIN TRY  
