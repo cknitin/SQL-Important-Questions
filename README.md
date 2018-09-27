@@ -201,6 +201,16 @@ Sol : 1. Creating stored procedure :
        
 A Maximum of 253 Foreign Keys we can have in for a single table.
 
+# 8. Are the two statements same 
+	
+	select ProductName from Products;
+
+	select All ProductName from Products;
+
+Answer:
+
+	YES
+
 
 
 
