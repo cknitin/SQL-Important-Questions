@@ -218,6 +218,35 @@ Answer:
 	INSERT INTO @TableVariableEmployee VALUES ('James')
 	SELECT * FROM @TableVariableEmployee
 
+# 10. Can we have Try catch in Sqlserver?
+
+Yes we can have Try catch statements in Sqlserver from SQLServer 2005
+
+Example
+
+    CREATE PROC AddEmployee
+    @Name NVARCHAR(5)
+    AS
+    BEGIN
+    BEGIN TRY 
+        INSERT INTO EMPLOYEE(Name) VALUES (@Name + 1) -- Generating error
+    END TRY 
+    BEGIN CATCH 
+        IF @@ERROR <> 0  
+            BEGIN
+                Print  'an error occurred'
+            END
+    END CATCH
+    END
+
+Executing
+
+	EXEC AddEmployee 'Jame Parker'
+    
+Result
+
+	(0 row(s) affected)
+	an error occurred
 
 
 
