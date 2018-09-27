@@ -508,3 +508,121 @@ We see that the table variable still exists and has all it's data unlike the tem
 - Primary Key Restrict duplicate values and null values each table can have only one primary key,default clustered index is the primary key. 
 
 - Unique key restrict duplicate values and allow only one null value.
+
+# 20. Store procedure 
+
+Store Procedure 
+- Without parameter
+- With single parameter
+- With multiple parameters
+- With output parameter
+- Default parameter 
+
+#### Without parameter
+
+    CREATE PROCEDURE uspGetProducts
+    AS
+    BEGIN
+
+    SELECT * 
+    FROM Products
+
+    END
+
+    EXEC uspGetProducts
+    
+    
+#### With single parameter
+
+    CREATE PROCEDURE uspGetProductsById @ID int 
+    AS
+    BEGIN
+
+        SELECT * 
+        FROM Products WHERE ProductID=@ID
+
+    END
+
+    EXEC uspGetProductsById 1
+    
+    
+#### With multiple parameters
+ 
+    CREATE PROCEDURE uspGetProductsByIdName 
+    @ID int,
+    @Name nvarchar(100)
+    AS
+    BEGIN
+
+        SELECT * 
+        FROM Products WHERE ProductID=@ID AND ProductName=@Name
+
+    END
+
+    EXEC uspGetProductsByIdName 1, 'chai'
+    
+#### With output parameter
+
+    CREATE PROC GetProductNameById
+    @Id int,
+    @name nvarchar(100) out
+    AS
+    BEGIN
+    SELECT @name=ProductName FROM Products where ProductID=@Id
+    END
+
+
+    Declare @name nvarchar(100)
+    exec GetProductNameById 1,@name output
+    select @name
+    
+#### Default Parameter
+
+    CREATE PROCEDURE uspGetAddress @City nvarchar(30) = NULL
+    AS
+    SELECT * FROM AdventureWorks.Person.Address
+    WHERE City = @City
+    
+#### How to DROP SP
+
+    DROP PROCEDURE uspGetAddress 
+    GO
+    -- or
+    DROP PROC uspGetAddress 
+    GO
+    -- or 
+    DROP PROC dbo.uspGetAddress -- also specify the schema
+
+#### Dropping Multiple Stored Procedures
+
+    DROP PROCEDURE uspGetAddress, uspInsertAddress, uspDeleteAddress
+    GO
+    
+    -- or
+    
+    DROP PROC uspGetAddress, uspInsertAddress, uspDeleteAddress
+    
+#### Encrypting and Decrypting SQL Server Stored Procedures, Views and User-Defined Functions
+    
+    CREATE PROC test_encrp WITH ENCRYPTION
+    AS
+    BEGIN
+
+    SELECT 'This is ecrypt text.'
+    END
+
+
+	EXEC test_encrp
+    
+#### Result 
+
+	This is ecrypt text.
+
+#### To see store procedure
+	SP_Helptext test_encrp
+
+#### Result
+
+The text for object 'test_encrp' is encrypt
+
+
