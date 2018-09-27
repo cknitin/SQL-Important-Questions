@@ -211,7 +211,12 @@ Answer:
 
 	YES
 
+# 9. Write a sample syntax of table variable and show its use?
 
+
+	DECLARE @TableVariableEmployee table (ID int IDENTITY(1,1),Name VARCHAR(150) NOT NULL)
+	INSERT INTO @TableVariableEmployee VALUES ('James')
+	SELECT * FROM @TableVariableEmployee
 
 
 
