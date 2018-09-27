@@ -169,6 +169,44 @@ A situation where the scope_identity() and the @@identity functions differ, is i
 So, normally you would use the scope_identity() function.
 
 
+#### Some more
+
+Let's create unique index on newspaper table
+
+CREATE UNIQUE INDEX UNQ_Name ON Newspaper(Name)
+
+Try to insert duplicate value
+
+
+	INSERT INTO Newspaper VALUES ('The Hindustan')
+
+Result
+
+	Msg 2601, Level 14, State 1, Line 47
+	Cannot insert duplicate key row in object 'dbo.NewsPaper' with unique index 'UNQ_Name'. 
+	The duplicate key value is (The Hindustan).
+	The statement has been terminated.
+	
+Again execute the
+
+	SELECT @@IDENTITY As [@@IDENTITY]
+	GO
+	SELECT SCOPE_IDENTITY() As [SCOPE_IDENTITY]
+	GO
+	SELECT IDENT_CURRENT('Newspaper') [IDENT_SELECT]
+	
+Result
+
+	@@IDENTITY
+	NULL
+	
+	SCOPE_IDENTITY
+	3
+	
+	IDENT_SELECT
+	4
+
+
 # 6. How do you determine the maximum nested-level of Stored Procedure ?
        
 
