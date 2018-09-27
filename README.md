@@ -433,3 +433,38 @@ A local temporary table exists only for the duration of a connection and accessi
 Global temporary tables (created with a double “##”) are visible to all sessions. You should always check for existence of the global temporary table before creating it… if it already exists, then you will get a duplicate object error. 
 
 Global temporary tables are dropped when the session that created it ends, and all other sessions have stopped referencing it.
+
+# 17. What is #temp table and @table variable in SQL Server?
+
+It's a kind of normal table but it is created and populated on disk, in the system database tempdb — with a session-specific identifier packed onto the name, to differentiate between similarly-named #temp tables created from other sessions. 
+
+The data in this #temp table (in fact, the table itself) is visible only to the current scope. Generally, the table gets cleared up automatically when the current procedure goes out of scope, however, we should manually clean up the data when we are done with it. 
+
+#### Syntax: 
+
+#### create temporary table
+
+		CREATE TABLE #myTempTable (AutoID int,MyName char(50) )
+
+#### populate temporary table
+
+		INSERT INTO #myTempTable (AutoID, MyName )
+
+		SELECT 	AutoID, MyName FROM 	myOriginalTable WHERE 	AutoID <= 50000
+
+#### Drop temporary table
+
+		drop table #myTempTable 
+
+#### @table variable 
+
+Table variable is similar to temporary table It is not physically stored in the hard disk, it is stored in the memory. 
+
+#### Syntax:
+
+		DECLARE @myTable TABLE (AutoID int,myName char(50) )
+		INSERT INTO @myTable (AutoID, myName )
+
+		SELECT 	YakID, YakName FROM 	myTable  WHERE 	AutoID <= 50
+
+We don't need to drop the @temp variable as this is created inside the memory and automatically disposed when scope finishes.
