@@ -378,9 +378,9 @@ UNION ALL
         
 Result
 
-		ColDetail
+	ColDetail
 
-		First		
+	First		
         Second
         Third
         Fourth
