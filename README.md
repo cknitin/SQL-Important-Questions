@@ -341,6 +341,10 @@ This is very imp point that You can apply a HAVING clause:
 
 Note that all the columns that appear in select statement must also appear in group by clause also
 
+# 12. What is the use of Set NOCOUNT ON;
+
+By Default When we execute any command it return us the number of record affected. if we don't want to return the number of records affected then we can use Set NOCOUNT ON;
+
 
 
 
