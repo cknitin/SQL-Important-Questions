@@ -1,6 +1,6 @@
 # SQL-Important-Questions
 
-#### 1. Difference between RANK(), DENSE_RANK() and RowNumber()
+# 1. Difference between RANK(), DENSE_RANK() and RowNumber()
 
 	# Rown Number
 
@@ -58,7 +58,7 @@ DENSERANK	|TotalAmount
 5			|90.00
 
 
-2. #### TOP 3rd Highest Salary
+# 2. TOP 3rd Highest Salary
 
 #### Method 1
 
@@ -85,15 +85,15 @@ DENSERANK	|TotalAmount
     WHERE Salary IN(SELECT TOP 3 Salary FROM Employee ORDER BY Salary DESC)
 
 
-3. #### Interchange the gender in a single query
+# 3. Interchange the gender in a single query
 
 		UPDATE Employee SET Gender = (case when gender = 'Male' then 'Female' ELSE 'Male' END)
 
-4. #### Update the salary of Female by 5000 and male with 500
+# 4. Update the salary of Female by 5000 and male with 500
 
 		UPDATE Employee SET Salary = (case when gender = 'Male' then salary + 500 ELSE Salary + 5000 END)
 
-5. #### Diffrence between @@IDENTITY and IDENTITY and SCOPE_IDENTITY and IDENT_CURRENT
+# 5. Diffrence between @@IDENTITY and IDENTITY and SCOPE_IDENTITY and IDENT_CURRENT
 
   - The @@identity function returns the last identity created in the same session.
   - The scope_identity() function returns the last identity created in the same session and the same scope.
