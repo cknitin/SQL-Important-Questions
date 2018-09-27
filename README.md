@@ -503,3 +503,8 @@ A simple example shows this difference quite nicely:
 
 We see that the table variable still exists and has all it's data unlike the temporary table that doesn't exists when the 	transaction rollbacked.
 
+# 19. Difference between Primary Key and unique key?
+
+- Primary Key Restrict duplicate values and null values each table can have only one primary key,default clustered index is the primary key. 
+
+- Unique key restrict duplicate values and allow only one null value.
