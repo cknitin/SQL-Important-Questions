@@ -61,11 +61,8 @@ DENSERANK	|TotalAmount
 2. #### TOP 3rd Highest Salary
 
 #### Method 1
-	SELECT * FROM (SELECT * FROM Employee Order by Salary DESC) X ORDER BY Salary ASC
 
-#### Method 2
-
-    SELECT TOP 1 *
+    SELECT *
     FROM
       (
        SELECT *,RANK() OVER(ORDER BY Salary) As RowNum
@@ -73,7 +70,7 @@ DENSERANK	|TotalAmount
        ) As A
     WHERE A.RowNum IN (3)
 
-#### Method 3
+#### Method 2
 
     ;WITH CTE AS
     (
@@ -81,11 +78,11 @@ DENSERANK	|TotalAmount
     )
     SELECT DISTINCT * FROM CTE WHERE RankId=3
 
-#### Method 4
+#### Method 3
 
     SELECT MAX(Salary)
     FROM Employee
-    WHERE Salary IN(SELECT TOP 3 Salary FROM Employee ORDER BY Salary ASC)
+    WHERE Salary IN(SELECT TOP 3 Salary FROM Employee ORDER BY Salary DESC)
 
 
 3. #### Interchange the gender in a single query
