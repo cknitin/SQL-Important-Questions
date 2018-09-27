@@ -218,7 +218,7 @@ Answer:
 	INSERT INTO @TableVariableEmployee VALUES ('James')
 	SELECT * FROM @TableVariableEmployee
 
-# 10. Can we have Try catch in Sqlserver?
+# 10. Can we have TRY…CATCH in Sqlserver?
 
 Yes we can have Try catch statements in Sqlserver from SQLServer 2005
 
@@ -247,6 +247,36 @@ Result
 
 	(0 row(s) affected)
 	an error occurred
+    
+#### TRY…CATCH with error information
+
+    BEGIN TRY  
+        -- Generate a divide-by-zero error.  
+         DECLARE @result INT;
+         SET @result = 1/0;  
+    END TRY  
+    BEGIN CATCH  
+        SELECT  
+            ERROR_NUMBER() AS ErrorNumber  
+            ,ERROR_SEVERITY() AS ErrorSeverity  
+            ,ERROR_STATE() AS ErrorState  
+            ,ERROR_PROCEDURE() AS ErrorProcedure  
+            ,ERROR_LINE() AS ErrorLine  
+            ,ERROR_MESSAGE() AS ErrorMessage;  
+    END CATCH;
+
+#### Errors Unaffected by a TRY…CATCH Construct
+
+	BEGIN TRY  
+	    -- Table does not exist; object name resolution  
+	    -- error not caught.  
+	    SELECT * FROM NonexistentTable;  
+	END TRY  
+	BEGIN CATCH  
+	    SELECT   
+		ERROR_NUMBER() AS ErrorNumber  
+	       ,ERROR_MESSAGE() AS ErrorMessage;  
+	END CATCH  
 
 
 
