@@ -345,6 +345,65 @@ Note that all the columns that appear in select statement must also appear in gr
 
 By Default When we execute any command it return us the number of record affected. if we don't want to return the number of records affected then we can use Set NOCOUNT ON;
 
+# 13. What is the difference between UNION ALL Statement and UNION
+
+- With UNION, only distinct values are selected.
+- The difference between Union and Union all is that Union all will not eliminate duplicate rows, instead it just pulls all rows from all tables fitting your query specifics and combines them into a table.
+- A UNION statement effectively does a SELECT DISTINCT on the results set. If you know that all the records returned are unique from your union, use UNION ALL instead, it gives faster results.
+
+Example  
+
+Declare First Table 
+    
+        DECLARE @Table1 TABLE (ColDetail VARCHAR(10))
+        INSERT INTO @Table1 SELECT 'First' UNION ALL SELECT 'Second' UNION ALL
+        SELECT 'Third' UNION ALL SELECT 'Fourth' UNION ALL SELECT 'Fifth'
+
+Declare Second Table
+    
+        DECLARE @Table2 TABLE (ColDetail VARCHAR(10))
+        INSERT INTO @Table2
+        SELECT 'First' UNION ALL SELECT 'Third' UNION ALL SELECT 'Fifth'
+
+Check the data using SELECT
+
+        SELECT * FROM @Table1
+        SELECT * FROM @Table2
+
+UNION ALL
+
+        SELECT * FROM @Table1
+        UNION ALL
+        SELECT * FROM @Table2
+        
+Result
+
+		ColDetail
+
+		First		
+        Second
+        Third
+        Fourth
+        Fifth
+        First
+        Third
+        Fifth
+        
+
+UNION
+
+        SELECT * FROM @Table1
+        UNION
+        SELECT * FROM @Table2
+Result
+
+        ColDetail
+        
+        Fifth
+        First
+        Fourth
+        Second
+        Third
 
 
 
