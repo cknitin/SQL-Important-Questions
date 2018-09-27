@@ -324,6 +324,23 @@ ErrorNumber | ErrorSeverity | ErrorState | ErrorProcedure | ErrorLine | ErrorMes
 	       ,ERROR_MESSAGE() AS ErrorMessage;  
 	END CATCH  
 
+# 11. Difference between WHERE and HAVING clause?
+
+HAVING specifies a search condition for a group or an aggregate function used in SELECT statement.
+HAVING can be used only with the SELECT statement. 
+HAVING is typically used in a GROUP BY clause. When GROUP BY is not used, HAVING behaves like a WHERE clause.
+HAVING clause is like a WHERE clause, but applies only to groups as a whole, whereas the WHERE clause applies to individual rows. 
+A query can contain both a WHERE clause and a HAVING clause. 
+
+WHERE clause is applied first to the individual rows in the tables . 
+Only the rows that meet the conditions in the WHERE clause are grouped. 
+The HAVING clause is then applied to the rows in the result set. Only the groups that meet the HAVING conditions appear in the query output. 
+This is very imp point that You can apply a HAVING clause:
+1. only to columns that also appear in the GROUP BY clause Or 
+2. 2. in an aggregate function.The above line proves the significance of the definition of having clause given above.
+
+Note that all the columns that appear in select statement must also appear in group by clause also
+
 
 
 
