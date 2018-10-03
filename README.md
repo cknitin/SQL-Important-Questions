@@ -627,6 +627,6 @@ The text for object 'test_encrp' is encrypt
 
 # 21. How to INSERT N number of records using single INSERT query?
 
-INSERT INTO Indexing VALUES('Demo Name','Demo company 1',1500)
-#### GO 100
+	INSERT INTO Indexing VALUES('Demo Name','Demo company 1',1500)
+	#### GO 100
 
