@@ -43,3 +43,53 @@
 	* Note: non unique clustered index adds 4-byte unique identifier column  
 
 1.If we create primary key on a table then, a clustered index will automatically get created. 
+
+## Example
+
+Create a table without any primary key
+
+	CREATE TABLE CompanyRecords
+	(
+		Id BIGINT NOT NULL,
+		Name NVARCHAR(100),
+		NumberOfEmployees INT
+	)
+
+Create a primary
+
+	ALTER TABLE CompanyRecords
+	ADD CONSTRAINT [PK_ComnayRecord] PRIMARY KEY ([Id] ASC) 
+
+Result - A clustered index will automatcially created 
+
+Now, Drop the primary Key
+
+	ALTER TABLE CompanyRecords DROP CONSTRAINT [PK_ComnayRecord]
+
+Now Add a Non-Clustered index in Id with primary key column
+
+	ALTER TABLE CompanyRecords 
+	ADD CONSTRAINT [PK_ComnayRecord] PRIMARY KEY NONCLUSTERED ([Id] ASC) 
+
+Result:A unique, non-clustered index and primary key will get created. 
+
+Now Again drop the primary key
+
+	ALTER TABLE CompanyRecords DROP CONSTRAINT [PK_ComnayRecord] 
+
+Now there is no primary key on the table and we are going to create a Clustered Index on the table
+
+	CREATE CLUSTERED INDEX [CL_ComapyRecord_Index] ON CompanyRecords 
+	(
+		Name ASC
+	)
+
+Result: A cluster index will get created.
+
+Now a primary key again
+
+	ALTER TABLE CompanyRecords
+	ADD CONSTRAINT [PK_ComnayRecord] PRIMARY KEY ([Id] ASC) 
+
+
+Result: A unique, non-clustered index will get created. 
