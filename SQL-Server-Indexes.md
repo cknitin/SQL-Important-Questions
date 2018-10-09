@@ -29,4 +29,17 @@
       The difference is that nonclustered index do not effect the order of the data rows
 * Each index row contains the nonclustered key value, a row locator and any included, or nonkey columns.
 
+# Fill Factor
+* The method to pre-allocate some space for the future expansion Fill-Factor is used.
+* To avoid PAGESPLIST and degrade performance.
 
+# Module 2:
+
+# Primary Key
+* Primary key automatically creates clustered index.
+	* Except - when non clustered index is specified 
+	* Except - when clustered index already exists
+* Primary key automatically creates unique index on column.
+	* Note: non unique clustered index adds 4-byte unique identifier column  
+
+1.If we create primary key on a table then, a clustered index will automatically get created. 
