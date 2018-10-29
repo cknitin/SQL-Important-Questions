@@ -880,7 +880,7 @@ Result:
 |1|	Rachel|	99|
 |2|	Bruce|	2000|
 |3|	Harvey|	3000|
-|4|     James|  1000|
+|4|     James|  1000| <----- This is a Phantom row to prevent this we use SERIALIZABLE isolation level.
 
 session 2 will execute without any delay because insert query is for new record. 
 REPEATABLE READ allows to insert new data but does not allow to modify data that is used in select query executed in transaction.
@@ -902,3 +902,44 @@ Session 2:
 Result:
 
 Session 2 Update query will execute without any delay because ID=3 is not locked by session 1 
+
+SERIALIZABLE
+
+Similar to Repeatable Read Isolation but the difference is it prevents Phantom Read.
+
+Example 1:
+
+Session 1:
+
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+	BEGIN TRAN
+	SELECT * FROM EMPLOYEE
+	WAITFOR DELAY '00:00:15'
+	SELECT * FROM EMPLOYEE
+	ROLLBACK
+
+Session 2:
+
+	INSERT INTO EMP(ID,NAME,SALARY)  VALUES( 11,'STEWART',11000)
+
+Result:
+
+Session 2, will have to wait untill session 1 will get completed, because session 1 will lock the complete table. 
+
+Example 2:
+
+Session 1:
+
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+BEGIN TRAN
+SELECT * FROM EMPLOYEE WHERE ID BETWEEN 1 AND 3
+WAITFOR DELAY '00:00:15'
+SELECT * FROM EMPLOYEE WHERE ID BETWEEN 1 AND 3
+ROLLBACK
+
+Session 2:
+
+INSERT INTO EMPLOYEE(ID,NAME,SALARY)  VALUES( 13,'Rocko',11000)
+
+Result : session 2 will not delay it will get executed and insert a new record. Becuase session 1 will only lock the record between 1 and 3.
+
