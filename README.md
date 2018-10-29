@@ -930,16 +930,80 @@ Example 2:
 
 Session 1:
 
-SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
-BEGIN TRAN
-SELECT * FROM EMPLOYEE WHERE ID BETWEEN 1 AND 3
-WAITFOR DELAY '00:00:15'
-SELECT * FROM EMPLOYEE WHERE ID BETWEEN 1 AND 3
-ROLLBACK
+	SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+	BEGIN TRAN
+	SELECT * FROM EMPLOYEE WHERE ID BETWEEN 1 AND 3
+	WAITFOR DELAY '00:00:15'
+	SELECT * FROM EMPLOYEE WHERE ID BETWEEN 1 AND 3
+	ROLLBACK
 
 Session 2:
 
-INSERT INTO EMPLOYEE(ID,NAME,SALARY)  VALUES( 13,'Rocko',11000)
+	INSERT INTO EMPLOYEE(ID,NAME,SALARY)  VALUES( 13,'Rocko',11000)
 
 Result : session 2 will not delay it will get executed and insert a new record. Becuase session 1 will only lock the record between 1 and 3.
 
+SNAPSHOT
+
+Similar to Serializable isolation. The difference is Snapshot does not hold lock on table during the transaction so table can be modified in other sessions. 
+Snapshot isolation maintains versioning in Tempdb for old data in case of any data modification occurs in other sessions then existing transaction displays the old data from Tempdb.
+
+Session 1:
+
+	ALTER DATABASE EFDemo  
+	SET ALLOW_SNAPSHOT_ISOLATION ON  
+
+	ALTER DATABASE EFDemo  
+	SET READ_COMMITTED_SNAPSHOT ON  
+
+	SET TRANSACTION ISOLATION LEVEL SNAPSHOT
+	BEGIN TRAN
+	SELECT * FROM EMPLOYEE
+	WAITFOR DELAY '00:00:15'
+	SELECT * FROM EMPLOYEE
+	ROLLBACK
+	
+Session 2:
+
+ INSERT INTO EMPLOYEE(ID,NAME,SALARY) VALUES( 15,'Dave',11000)
+ UPDATE EMPLOYEE SET SALARY=2000 WHERE ID=2
+ SELECT * FROM EMPLOYEE
+ 
+ 
+ Result"
+ 
+ Session 1:
+ 
+|ID	|Name	|Salary|
+|-------|-------|------|
+|1	|Rachel	|99|
+|2	|Bruce	|2000|
+|3	|Harvey	|999|
+|11	|Mark	|11000|
+|12	|James	|11000|
+|13	|Rocko	|11000|
+ 
+ 
+|ID	|Name	|Salary|
+|-------|-------|------|
+|1	|Rachel	|99|
+|2	|Bruce	|2000|
+|3	|Harvey	|999|
+|11	|Mark	|11000|
+|12	|James	|11000|
+|13	|Rocko	|11000|
+ 
+ 
+ 
+ Session 2:
+ 
+|ID	|Name	|Salary|
+|-------|-------|------|
+|1	|Rachel	|99|
+|2	|Bruce	|2000|
+|3	|Harvey	|999|
+|11	|Mark	|11000|
+|12	|James	|11000|
+|13	|Rocko	|11000|
+|15	|Dave	|11000|
+ 
