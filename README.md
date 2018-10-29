@@ -645,7 +645,30 @@ Returns the error number for the last Transact-SQL statement executed
 	BEGIN
 		PRINT 'UNKNOW ERROR.'
 	END
-		
+
+# 24. @@TRANCOUNT
+Its returns the no. of BEGIN TRANSACTION statements in current connection.
+
+	PRINT @@TRANCOUNT  
+	--  The BEGIN TRAN statement will increment the  
+	--  transaction count by 1.  
+	BEGIN TRAN  
+	    PRINT @@TRANCOUNT  
+	    BEGIN TRAN  
+		PRINT @@TRANCOUNT  
+	--  The COMMIT statement will decrement the transaction count by 1.  
+	    COMMIT  
+	    PRINT @@TRANCOUNT  
+	COMMIT  
+	PRINT @@TRANCOUNT  
+	
+	--Results  
+	--0  
+	--1  
+	--2  
+	--1  
+	--0 
+
 # 23. XACT_STATE
 Return the user transaction state
 Its return three values 0, 1, or -1
@@ -686,6 +709,11 @@ If 0, means there is no transaction and a commit or rollback operation would gen
 	SELECT XACT_STATE()
 	END CATCH; 
 
+# @@ROWCOUNT
+It returns the number of rows affected by the last T-SQL statement. If no. of rows are more than 2 billion, use ROWCOUNT_BIG
 
+	UPDATE Emp SET JobTitle = N'Executive' WHERE ID = 123456789  
 
+	IF @@ROWCOUNT = 0  
+		PRINT 'No rows were updated';  
 		
