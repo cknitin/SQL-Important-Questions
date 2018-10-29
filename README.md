@@ -70,6 +70,23 @@ NTILE()
 |Rachel	|Social	|60	|2|
 
 
+Row_Number
+
+SELECT StudentName, Subject, Marks, ROW_NUMBER() OVER(ORDER BY StudentName) RowNumber 
+FROM StudentResult 
+
+|StudentName|Subject|Marks|RowNumber|
+|-----------|-------|-----|---------|
+|Bruce	|Maths	|60	|1|
+|Bruce	|Science|50	|2|
+|Bruce	|Social	|70	|3|
+|Harvey	|Maths	|90	|4|
+|Harvey	|Science|90	|5|
+|Harvey	|Social	|80	|6|
+|Rachel	|Maths	|70	|7|
+|Rachel	|Science|80	|8|
+|Rachel	|Social	|60	|9|
+
 # 2. TOP 3rd Highest Salary
 
 #### Method 1
