@@ -1,61 +1,38 @@
 # SQL-Important-Questions
 
-# 1. Difference between RANK(), DENSE_RANK() and RowNumber()
+# 1. Difference between RANK(), DENSE_RANK(), NTILE() and RowNumber()
 
-	# Rown Number
+	CREATE TABLE StudentResult(StudentName VARCHAR(50),Subject VARCHAR(20),Marks INT)
 
-SELECT ROW_NUMBER() OVER (ORDER BY TOTALAmount) AS RowNumber, TotalAmount FROM orders
+	INSERT INTO StudentResult VALUES('Rachel','Maths',70)
+	INSERT INTO StudentResult VALUES ('Rachel','Science',80)
+	INSERT INTO StudentResult VALUES ('Rachel','Social',60)
 
-RowNumber 	| TotalAmount
-------		|-----------
-1			|	0.00
-2			|	5.00
-3			|	5.00
-4			|	5.00
-5			|	5.00
-6			|	5.00
-7			|	14.00
-8			|	76.00
-9			|	90.00
-10			|	90.00
+	INSERT INTO StudentResult VALUES('Bruce','Maths',60)
+	INSERT INTO StudentResult VALUES ('Bruce','Science',50)
+	INSERT INTO StudentResult VALUES ('Bruce','Social',70)
+
+	INSERT INTO StudentResult VALUES('Harvey','Maths',90)
+	INSERT INTO StudentResult VALUES ('Harvey','Science',90)
+	INSERT INTO StudentResult VALUES ('Harvey','Social',80)
 
 
+RANK()
 
-	# RANK
-
-SELECT RANK() OVER (ORDER BY TOTALAmount) AS [RANK], TotalAmount FROM orders
-
-RANK		|TotalAmount
-------------|------
-1			|0.00
-2			|5.00
-2			|5.00
-2			|5.00
-2			|5.00
-2			|5.00
-7			|14.00
-8			|76.00
-9			|90.00
-9			|90.00
-9			|90.00
+	SELECT StudentName, Subject, Marks, RANK() OVER(PARTITION BY StudentName ORDER BY Marks DESC) RANK FROM StudentResult
 
 
-	# DENSE_RANK 
+Bruce	Social	70	1
+Bruce	Maths	60	2
+Bruce	Science	50	3
+Harvey	Maths	90	1
+Harvey	Science	90	1
+Harvey	Social	80	3
+Rachel	Science	80	1
+Rachel	Maths	70	2
+Rachel	Social	60	3
 
-SELECT DENSE_RANK() OVER (ORDER BY TOTALAmount) AS [DENSE_RANK], TotalAmount FROM orders
 
-DENSERANK	|TotalAmount
-------------|------
-1			|0.00
-2			|5.00
-2			|5.00
-2			|5.00
-2			|5.00
-2			|5.00
-3			|14.00
-4			|76.00
-5			|90.00
-5			|90.00
 
 
 # 2. TOP 3rd Highest Salary
