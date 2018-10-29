@@ -629,4 +629,63 @@ The text for object 'test_encrp' is encrypt
 
 	INSERT INTO Indexing VALUES('Demo Name','Demo company 1',1500)
 	GO 100
+	
+# 22. @@ERROR
+Returns the error number for the last Transact-SQL statement executed
 
+	DECLARE @ErrorNumber INT
+	RAISERROR('This is custom error',16,1);
+	SELECT @ErrorNumber = @@Error
+	PRINT @ErrorNumber
+	IF @ErrorNumber = 50000
+	BEGIN
+		PRINT 'ERROR raise by RAISERROR function.'
+	END
+	ELSE
+	BEGIN
+		PRINT 'UNKNOW ERROR.'
+	END
+		
+# 23. XACT_STATE
+Return the user transaction state
+Its return three values 0, 1, or -1
+
+If 1, the transaction is committable.  
+If -1, the transaction is uncommittable and should be rolled back.  
+If 0, means there is no transaction and a commit or rollback operation would generate an error.  
+
+	BEGIN TRY
+	SET XACT_ABORT ON
+	BEGIN TRAN
+		RAISERROR('Hello this is error',16,1);
+	END TRY
+	BEGIN CATCH
+	SELECT
+	ERROR_NUMBER() as ErrorNumber,
+	ERROR_MESSAGE() as ErrorMessage;
+
+	-- Test XACT_STATE for 1 or -1.
+	-- XACT_STATE = 0 means there is no transaction and
+	-- a commit or rollback operation would generate an error.
+	-- Test whether the transaction is uncommittable.
+	IF (XACT_STATE()) = -1
+	BEGIN
+	PRINT
+		N'The transaction is in an uncommittable state. ' + 'Rolling back transaction.'
+	ROLLBACK TRANSACTION;
+	END;
+
+	-- Test whether the transaction is active and valid.
+	IF (XACT_STATE()) = 1
+	BEGIN
+	PRINT
+		N'The transaction is committable. ' + 'Committing transaction.'  
+	SELECT XACT_STATE()
+	COMMIT TRANSACTION; 
+	END;
+	SELECT XACT_STATE()
+	END CATCH; 
+
+
+
+		
