@@ -23,7 +23,7 @@ RANK()
 	FROM StudentResult
 
 |NAME|Subject|Marks|Rank|
--------------------------
+|-----------------------|
 |Bruce |Social|70|1|
 |Bruce |Maths|60|2|
 |Bruce |Science|50|3|
