@@ -748,3 +748,65 @@ It returns the number of rows affected by the last T-SQL statement. If no. of ro
 		
 # 26. ROWCOUNT_BIG
 It returns no. of rows affected by the last statement executed. it's the return type of ROWCOUNT_BIG is bigint.
+
+# 27. Isolation Level
+
+Types of Isolation Level
+
+1. READ COMMITTED
+2. READ UNCOMMITTED
+3. REPEATABLE READ
+4. SERIALIZABLE
+5. SNAPSHOT
+
+|ID|	Name	|Salary |
+|--|------------|-------|
+|1 |	Rachel	|1000   |
+|2 |	Bruce	|2000   |
+|3 |	Harvey	|3000   |
+
+READ COMMITTED
+
+Session 1:
+
+	BEGIN TRAN
+
+	UPDATE EMPLOYEE SET SALARY=99 WHERE ID=1
+	WAITFOR DELAY '00:00:15'
+	COMMIT
+
+Session 2:
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	SELECT SALARY FROM EMPLOYEE WHERE ID=1
+
+Result: -
+
+99
+
+In second session, will return the result only after complete execution transaction in first session, Session 1 will lock on Employee table for 15 second becuase transaction is not committed. 
+
+Session 1
+	
+	BEGIN TRAN
+	SELECT * FROM EMPLOYEE
+	WAITFOR DELAY '00:00:15'
+	COMMIT
+
+Session 2
+
+	SET TRANSACTION ISOLATION LEVEL READ COMMITTED
+	SELECT SALARY FROM EMPLOYEE 
+
+Result
+
+|SALARY|
+--------
+|99|
+|2000|
+|3000|
+
+No delay, because there is not update and delete statement in session 1's transaction.
+
+READ UNCOMMITTED
+
