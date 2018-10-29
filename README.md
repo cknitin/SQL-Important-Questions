@@ -52,6 +52,24 @@ DENSE_RANK()
 |Rachel	|Social	|60	|3|
 
 
+NTILE()
+
+	SELECT StudentName,Subject,Marks, NTILE(2) OVER(PARTITION BY StudentName ORDER BY Marks DESC) 
+	NTILE_ FROM StudentResult
+	
+|StudentName|Subjects|Marks|NTILE_|
+|-------|-------|-------|-|
+|Bruce	|Social	|70	|1|
+|Bruce	|Maths	|60	|1|
+|Bruce	|Science|50	|2|
+|Harvey	|Maths	|90	|1|
+|Harvey	|Science|90	|1|
+|Harvey	|Social	|80	|2|
+|Rachel	|Science|80	|1|
+|Rachel	|Maths	|70	|1|
+|Rachel	|Social	|60	|2|
+
+
 # 2. TOP 3rd Highest Salary
 
 #### Method 1
