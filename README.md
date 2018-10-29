@@ -19,18 +19,19 @@
 
 RANK()
 
-	SELECT StudentName, Subject, Marks, RANK() OVER(PARTITION BY StudentName ORDER BY Marks DESC) RANK FROM StudentResult
+	SELECT StudentName, Subject, Marks, RANK() OVER(PARTITION BY StudentName ORDER BY Marks DESC) RANK
+	FROM StudentResult
 
-
-Bruce	Social	70	1
-Bruce	Maths	60	2
-Bruce	Science	50	3
-Harvey	Maths	90	1
-Harvey	Science	90	1
-Harvey	Social	80	3
-Rachel	Science	80	1
-Rachel	Maths	70	2
-Rachel	Social	60	3
+NAME  |Subject| Marks| Rank
+Bruce |	Social|	70|	1
+Bruce |	Maths |	60|	2
+Bruce |	Science|50|	3
+Harvey|	Maths	|90|	1
+Harvey|	Science	|90|	1
+Harvey|	Social	|80|	3
+Rachel|	Science	|80|	1
+Rachel|	Maths	|70|	2
+Rachel|	Social	|60|	3
 
 
 
