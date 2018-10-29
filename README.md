@@ -801,7 +801,7 @@ Session 2
 Result
 
 |SALARY|
---------
+|------|
 |99|
 |2000|
 |3000|
@@ -810,3 +810,95 @@ No delay, because there is not update and delete statement in session 1's transa
 
 READ UNCOMMITTED
 
+Session 1:
+
+	BEGIN TRAN
+	UPDATE EMPLOYEE SET SALARY=999 WHERE ID=1
+	WAITFOR DELAY '00:00:15'
+	ROLLBACK
+	
+Session 2:
+
+	SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED
+	SELECT SALARY FROM EMPLOYEE WHERE ID=1
+	
+	
+Result:
+999
+
+No delay in session 2 for fetching result because uncommitted can do dirty read.
+
+Dirty Read - Those rows whcih are uncommitted or pending committed. 
+
+
+REPEATABLE READ
+Data can not be modified from any other sessions till transcation is completed.
+
+Example 1
+
+Session 1:
+
+	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+	BEGIN TRAN
+	SELECT * FROM Employee WHERE ID IN(1,2)
+	WAITFOR DELAY '00:00:15'
+	SELECT * FROM Employee WHERE ID IN (1,2)
+	ROLLBACK
+
+Session 2:
+
+	UPDATE Employee SET SALARY=99 WHERE ID=1
+
+Result:
+Data can not be modified by session 2 update statement untill session 1 is completed.
+
+Example 2
+
+Session 1:
+
+	SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+	BEGIN TRAN
+	SELECT * FROM EMPLOYEE
+	WAITFOR DELAY '00:00:15'
+	SELECT * FROM EMPLOYEE
+	ROLLBACK
+
+Session 2:
+
+ 	INSERT INTO EMPLOYEE(ID,NAME,SALARY) VALUES( 11,'James',1000)
+	
+Result:
+
+|ID|	Name|	Salary|
+|--|--------|---------|
+|1|	Rachel|	99|
+|2|	Bruce|	2000|
+|3|	Harvey|	3000|
+
+|ID|	Name|	Salary|
+|--|--------|---------|
+|1|	Rachel|	99|
+|2|	Bruce|	2000|
+|3|	Harvey|	3000|
+|4|     James|  1000|
+
+session 2 will execute without any delay because insert query is for new record. 
+REPEATABLE READ allows to insert new data but does not allow to modify data that is used in select query executed in transaction.
+
+Example 3:
+
+Session 1:
+	 SET TRANSACTION ISOLATION LEVEL REPEATABLE READ
+	 BEGIN TRAN
+	 SELECT * FROM EMPLOYEE WHERE ID IN(1,2)
+	 WAITFOR DELAY '00:00:15'
+	 SELECT * FROM EMPLOYEE WHERE ID IN (1,2)
+	 ROLLBACK
+
+Session 2:
+
+	UPDATE EMPLOYEE SET SALARY=999 WHERE ID=3
+
+Result:
+
+Session 2 Update query will execute without any delay because ID=3 is not locked by session 1 
