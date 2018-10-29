@@ -34,7 +34,22 @@ RANK()
 |Rachel|Maths  |70   |2   |
 |Rachel|Social |60   |3   |
 
+DENSE_RANK()
 
+	SELECT StudentName,Subject,Marks, DENSE_RANK() OVER(PARTITION BY StudentName ORDER BY Marks DESC) 
+	DENSERank FROM StudentResult
+
+|Name   |Subject|Marks  |DENSERank|
+|-------|-------|-------|---------|
+|Bruce	|Social	|70	|1|
+|Bruce	|Maths	|60	|2|
+|Bruce	|Science|50	|3|
+|Harvey	|Maths	|90	|1|
+|Harvey	|Science|90	|1|
+|Harvey	|Social	|80	|2|
+|Rachel	|Science|80	|1|
+|Rachel	|Maths	|70	|2|
+|Rachel	|Social	|60	|3|
 
 
 # 2. TOP 3rd Highest Salary
