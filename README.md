@@ -751,7 +751,7 @@ It returns the number of rows affected by the last T-SQL statement. If no. of ro
 # 26. ROWCOUNT_BIG
 It returns no. of rows affected by the last statement executed. it's the return type of ROWCOUNT_BIG is bigint.
 
-# 27. Update incrementing value by 1 in a column 
+# 27. Populate a SQL Server column with a sequential number not using an identity
 
 |Id|	Name|
 |--|--------|
