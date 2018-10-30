@@ -91,21 +91,24 @@ FROM StudentResult
 
 #### Method 1
 
-    SELECT *
-    FROM
-      (
-       SELECT *,RANK() OVER(ORDER BY Salary) As RowNum
-       FROM EMPLOYEE
-       ) As A
-    WHERE A.RowNum IN (3)
+	   SELECT *
+	    FROM
+	      (
+	       SELECT DISTINCT Salary, DENSE_RANK() OVER(ORDER BY Salary DESC) As RowNum
+	       FROM EMPLOYEE
+	       ) As A
+	    WHERE A.RowNum IN (3)
+
 
 #### Method 2
 
-    ;WITH CTE AS
-    (
-        SELECT RankId = RANK() OVER (Order BY Salary DESC), Salary FROM Employee 
-    )
-    SELECT DISTINCT * FROM CTE WHERE RankId=3
+    
+	WITH e (salary,rank)
+	AS
+	(select DISTINCT salary, DENSE_RANK() OVER(order by salary) Rank from employee)
+
+	SELECT * FROM e where Rank=3
+   
 
 #### Method 3
 
