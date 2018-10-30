@@ -112,9 +112,7 @@ FROM StudentResult
 
 #### Method 3
 
-    SELECT MAX(Salary)
-    FROM Employee
-    WHERE Salary IN(SELECT DISTINCT TOP 3 Salary FROM Employee ORDER BY Salary DESC)
+    SELECT MIN(Salary) Salary FROM (SELECT DISTINCT TOP 3 SALARY FROm Employee ORDER BY Salary DESC) x
 
 
 # 3. Interchange the gender in a single query
