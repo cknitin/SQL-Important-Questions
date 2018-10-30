@@ -148,10 +148,9 @@ FROM StudentResult
     
     1	The Hindu
     2	Times of India
-    3	The Hindustan
 
 
-	CREATE TABLE LocalNewspaper
+    CREATE TABLE LocalNewspaper
     (
         ID INT IDENTITY(100,5) PRIMARY KEY,
         Name NVARCHAR(100)
@@ -163,7 +162,7 @@ FROM StudentResult
     
     100	 Amur Ujala
     105	 Danika Vichar
-    110	 The Hindustan
+  
     
     
     CREATE TRIGGER insertNewspaper ON Newspaper
