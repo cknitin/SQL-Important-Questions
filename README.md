@@ -751,7 +751,37 @@ It returns the number of rows affected by the last T-SQL statement. If no. of ro
 # 26. ROWCOUNT_BIG
 It returns no. of rows affected by the last statement executed. it's the return type of ROWCOUNT_BIG is bigint.
 
-# 27. Isolation Level
+# 27. Update incrementing value by 1 in a column 
+
+|Id|	Name|
+|--|--------|
+|NULL|	Mark|
+|NULL|	Jack|
+|NULL|	Rubel|
+|NULL|	Don|
+|NULL|	Sam|
+|NULL|	Rocko|
+|NULL|	Jim|
+
+	DECLARE @x INT 
+	SET @x=0
+	UPDATE Test SET @x=id=@x+1
+
+
+Result:
+
+|Id|	Name|
+|--|--------|
+|1|	Mark|
+|2|	Jack|
+|3|	Rubel|
+|4|	Don|
+|5|	Sam|
+|6|	Rocko|
+|7|	Jim|
+
+
+# 28. Isolation Level
 
 Types of Isolation Level
 
