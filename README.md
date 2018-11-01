@@ -1037,3 +1037,20 @@ Session 2:
 |13	|Rocko	|11000|
 |15	|Dave	|11000|
  
+
+
+# 29. What is CURSOR
+A database object that is use to fetch data from resultset one by one, Generally it is use to update the data Row By Row.
+
+Life Cycle of CURSOR
+- Declare
+- Open
+- Fetch
+- Close
+- Declare
+
+
+
+
+
+
